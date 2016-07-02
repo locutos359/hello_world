@@ -1,6 +1,7 @@
 package org.martian.helloWorld.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Optional;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 @Path("/helloWorld")
 @Api(value = "Hello World APIs", description = "Hello World")
@@ -43,5 +46,29 @@ public class HelloWorldResource {
         }
         final String message = String.format(template, name);
         return new Saying(counter.incrementAndGet(), message);
+    }
+
+    @GET
+    @Path("valueCheck")
+    public Integer getValue(@QueryParam("value") Integer value) {
+        TestSubClass testSubClass = new TestSubClass();
+        testSubClass.value = value;
+        TestClass testClass = new TestClass();
+        testClass.testSubClass = testSubClass;
+
+        validateValue(testClass.testSubClass.value);
+        return testClass.testSubClass.value;
+    }
+
+    private void validateValue(final Integer value) {
+        checkNotNull(value);
+    }
+
+    public class TestClass {
+        @JsonProperty TestSubClass testSubClass = new TestSubClass();
+    }
+
+    public class TestSubClass {
+        @JsonProperty int value;
     }
 }

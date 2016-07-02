@@ -1,0 +1,11 @@
+server:
+  applicationConnectors:
+  - type: http
+    port: 1337
+  adminConnectors:
+  - type: http
+    port: 1338
+logging:
+  level: INFO
+template: Hello, %s!
+defaultName: Stranger

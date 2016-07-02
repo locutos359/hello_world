@@ -1,0 +1,4 @@
+org/martian/helloWorld/resource/HelloWorldResource.class
+org/martian/helloWorld/model/Saying.class
+org/martian/helloWorld/HelloWorldConfiguration.class
+org/martian/helloWorld/HelloWorldApplication.class
